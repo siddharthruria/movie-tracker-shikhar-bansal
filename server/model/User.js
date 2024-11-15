@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     {
       id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Movies",
+        ref: "Show",
         required: true,
       },
       status: {

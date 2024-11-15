@@ -174,39 +174,37 @@ router.post(
 
 // GET -> get logged user details
 
-router.get(
-  "/getUser",
+router.get("/show/user", verifyToken, async (req, res) => {
+  try {
+    const userId = req.query.id;
 
-  // middleware for verifying the token
-  verifyToken,
-  async (req, res) => {
-    try {
-      // req.user populated with the payload info. by the middleware
-      const userId = req.user.id;
-
-      // excluding password from the response
-      const user = await User.findById(userId).select("-password");
-
-      // user not found
-      if (!user) {
-        return res.status(404).json({
-          success: false,
-          error: "user not found",
-        });
-      }
-
-      // user authenticated successfully and proceed to send data
-      res.status(200).json({
-        success: true,
-        user,
-      });
-    } catch (error) {
-      res.status(500).json({
+    if (!userId) {
+      return res.status(400).json({
         success: false,
-        error: "internal server error :/",
+        message: "user id is required in the query string.",
       });
     }
+
+    const user = await User.findById(userId).populate("list.id");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "user not found.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      list: user.list,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({
+      success: false,
+      error: "internal server error :/",
+    });
   }
-);
+});
 
 module.exports = router;

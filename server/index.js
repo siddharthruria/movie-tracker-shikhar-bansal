@@ -20,13 +20,15 @@ app.use(cookieParser());
 connectDB();
 
 const userRoute = require("./route/user");
+const showRoute = require("./route/show");
 
 app.use("/api/user", userRoute);
+app.use("/api/show", showRoute);
 
 const PORT = process.env.PORT;
 
 app.get("/", (_req, res) => {
-  res.send("welcome to the application server");
+  res.send("welcome to the movie-tracker application express server home");
 });
 
 app.listen(PORT, () => {
