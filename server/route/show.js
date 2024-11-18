@@ -91,48 +91,57 @@ router.get("", async (req, res) => {
 
 // ------------------------------- ROUTE 4 -------------------------------
 
-// route (/api/show/user?=id/shows)
+  // route (/api/show/user?=id)
 
-// GET -> get all shows of a user
+  // GET -> get all shows of a user
 
-router.get("/user", verifyToken, async (req, res) => {
-  try {
-    const userId = req.query.id;
+  router.get("/user", verifyToken, async (req, res) => {
+    try {
+      const userId = req.query.id;
 
-    if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: "user id is required in the query string.",
+      if (!userId) {
+        return res.status(400).json({
+          success: false,
+          message: "user id is required in the query string.",
+        });
+      }
+
+      const user = await User.findById(userId).populate("list.id");
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "user not found.",
+        });
+      }
+
+      const shows = user.list.map((item) => item.id);
+
+      if (!shows || shows.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "no shows found for this user.",
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        shows,
       });
-    }
-
-    const shows = await Show.find({ userId });
-
-    if (!shows || shows.length === 0) {
-      return res.status(404).json({
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).json({
         success: false,
-        message: "no shows found for this user.",
+        error: "internal server error :/",
       });
-    }
-
-    res.status(200).json({
-      success: true,
-      shows,
-    });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({
-      success: false,
-      error: "internal server error :/",
-    });
-  }
-});
+    } 
+  });
 
 // ------------------------------- ROUTE 5 -------------------------------
 
 // route (/api/show/user/12345/list/shows/to-watch)
 
-// GET -> get all shows (to watch/watched) of a user
+// GET -> get all shows of category (to watch/watched) of a user
 
 router.get(
   "/user/:userId/list/shows/:status",

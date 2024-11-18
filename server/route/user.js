@@ -174,32 +174,25 @@ router.post(
 
 // GET -> get logged user details
 
-router.get("/show/user", verifyToken, async (req, res) => {
+router.get("/getUser", verifyToken, async (req, res) => {
   try {
-    const userId = req.query.id;
+    const userId = req.user.id;
 
-    if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: "user id is required in the query string.",
-      });
-    }
+    // excluding password from the response
+    const user = await User.findById(userId).select("-password");
 
-    const user = await User.findById(userId).populate("list.id");
-
+    // if user not found
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: "user not found.",
+        error: "user not found",
       });
     }
-
     res.status(200).json({
       success: true,
-      list: user.list,
+      user,
     });
   } catch (error) {
-    console.error(error.message);
     res.status(500).json({
       success: false,
       error: "internal server error :/",
