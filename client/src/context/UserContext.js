@@ -11,21 +11,24 @@ const UserProvider = ({ children }) => {
 
   const fetchUserData = async (token) => {
     try {
-      const response = await fetch("https://movie-tracker-backend.onrender.com/api/user/getUser", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      });
-
-      if (!response.ok) {
+      const response = await fetch(
+        "https://movie-tracker-backend.onrender.com/api/user/getUser",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        }
+      );
+      const responseData = await response.json();
+      // console.log(responseData);
+      if (!responseData.success) {
         console.error("token invalid or server restarted");
       }
 
-      const userData = await response.json();
-      setUser(userData.user);
+      setUser(responseData.user);
     } catch (error) {
       setToken(null);
       setUser(null);
