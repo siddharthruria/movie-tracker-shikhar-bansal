@@ -17,7 +17,7 @@ const Signup = () => {
   const submitFunc = async (e) => {
     e.preventDefault();
     const { name, email, password } = credentials;
-    const response = await fetch("http://localhost:5555/api/user/createUser", {
+    const response = await fetch("https://movie-tracker-backend.onrender.com/api/user/createUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

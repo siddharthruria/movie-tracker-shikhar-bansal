@@ -8,7 +8,7 @@ const DetailedView = () => {
 
   const fetchShowDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:5555/api/show?id=${id}`);
+      const response = await fetch(`https://movie-tracker-backend.onrender.com/api/show?id=${id}`);
       if (!response.ok) {
         return console.error("failed to fetch details of show :/");
       }

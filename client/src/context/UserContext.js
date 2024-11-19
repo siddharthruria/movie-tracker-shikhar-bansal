@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
 
   const fetchUserData = async (token) => {
     try {
-      const response = await fetch("http://localhost:5555/api/user/getUser", {
+      const response = await fetch("https://movie-tracker-backend.onrender.com/api/user/getUser", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

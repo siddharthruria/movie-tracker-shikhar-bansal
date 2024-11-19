@@ -14,7 +14,7 @@ const ShowProvider = ({ children }) => {
 
   const fetchAllShows = async () => {
     try {
-      const response = await fetch("http://localhost:5555/api/show/allShows", {
+      const response = await fetch("https://movie-tracker-backend.onrender.com/api/show/allShows", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const ShowProvider = ({ children }) => {
         return console.log("user id is required to fetch the list.");
       }
       const response = await fetch(
-        `http://localhost:5555/api/show/user?id=${userId}`,
+        `https://movie-tracker-backend.onrender.com/api/show/user?id=${userId}`,
         {
           method: "GET",
           headers: {
@@ -64,7 +64,7 @@ const ShowProvider = ({ children }) => {
         console.error("show is is required to add to the list.");
         return;
       }
-      const response = await fetch("http://localhost:5555/api/show/user/add", {
+      const response = await fetch("https://movie-tracker-backend.onrender.com/api/show/user/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +92,7 @@ const ShowProvider = ({ children }) => {
         return;
       }
       const response = await fetch(
-        `http://localhost:5555/api/show/search?query=${query}`,
+        `https://movie-tracker-backend.onrender.com/api/show/search?query=${query}`,
         {
           method: "GET",
           headers: {

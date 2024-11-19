@@ -3,13 +3,13 @@ import { ShowContext } from "../context/ShowContext";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
-  const { searchShows, searchQuery } = useContext(ShowContext); // Access the search function from context
+  const { searchShows, searchQuery } = useContext(ShowContext);
 
   const handleSearch = () => {
     if (query.trim()) {
-      searchQuery(query); // Call the context function with the search query
+      searchQuery(query);
     } else {
-      console.log("Please enter a valid search query.");
+      console.log("please enter a valid search query.");
     }
   };
 
@@ -39,7 +39,7 @@ const SearchBar = () => {
           cursor: "pointer",
         }}
       >
-        Search
+        search
       </button>
     </div>
   );
