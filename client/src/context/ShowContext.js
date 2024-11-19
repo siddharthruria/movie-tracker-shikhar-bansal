@@ -47,7 +47,7 @@ const ShowProvider = ({ children }) => {
       );
 
       const responseData = await response.json();
-      setUserList(responseData.shows);
+      if (responseData.success) setUserList(responseData.shows);
     } catch (error) {
       console.error(error.message);
       console.log("error fetching user list :/");

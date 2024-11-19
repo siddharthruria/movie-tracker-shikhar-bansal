@@ -4,12 +4,11 @@ import { ShowContext } from "../context/ShowContext";
 import Card from "../components/Card";
 
 const User = () => {
-  const { user } = useContext(UserContext);
   const { userList } = useContext(ShowContext);
 
   return (
     <div>
-      <h1>{user?.name}'s shows</h1>
+      <h1>your shows</h1>
       <div className="card-container">
         {userList.length > 0 ? (
           userList.map((show) => (
